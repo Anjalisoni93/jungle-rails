@@ -14,6 +14,12 @@ RSpec.describe Product, type: :model do
       expect(@product).to_not be_valid
     end
 
+    it 'should have an error message with name cant be blank' do
+      @category = Category.new({:name => 'Test'})
+      @product = Product.create(name: nil, price: 1000, quantity: 2, category: @category)
+      expect(@product.errors.full_messages).to include("Name can't be blank")
+    end
+
     it 'should not validate when price is set to nil' do
       @category = Category.new({:name => 'Test'})
       @product = Product.new({:name => "Test", :price => nil, :quantity => 1, :category => @category})
